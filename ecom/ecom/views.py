@@ -1,7 +1,8 @@
+from django.contrib.auth import authenticate, login, get_user_model
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render,redirect
 
-from ecom.forms import ContactForm
+from ecom.forms import ContactForm,LoginForm
 
 def home_page(request):
     # return HttpResponse ("HI WORLD !!")
@@ -10,6 +11,46 @@ def home_page(request):
         "content":"Welcome to the Home page"
     }
     return render(request,"home_page.htm",context)
+
+
+
+def login_page(request):
+    form = LoginForm(request.POST or None)
+    context = {
+        "title":"HELLO WORLD",
+        "content":"Welcome to the about page",
+        "form":form
+    }
+    print("User Logged IN")
+    print(request.user.is_authenticated)
+    if form.is_valid():
+        print(form.cleaned_data)
+        username  = form.cleaned_data.get("username")
+        password  = form.cleaned_data.get("password")
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        #print(request.user.is_authenticated())
+        if user is not None:
+            #print(request.user.is_authenticated())
+            login(request, user)
+            # Redirect to a success page.
+            #context['form'] = LoginForm()
+            return redirect("/")
+        else:
+            # Return an 'invalid login' error message.
+            print("Error")
+
+    return render(request,"auth/login.htm",context)
+
+def registration_page(request):
+    form = RegisterForm(request.POST or None)
+    context = {
+        "title":"HELLO WORLD",
+        "content":"Welcome to the about page"
+    }
+    if form.is_valid():
+        print(form.cleaned_data)
+    return render(request,"auth/registration.htm",context)
 
 
 def about_page(request):
@@ -28,8 +69,10 @@ def contact_page(request):
         "form": contact_form
     }
 
+    # Django creates an attribute called cleaned_data , a dictionary which contains cleaned data only from the fields which have passed the validation tests. Note that cleaned_data attribute will only be available to you after you have invoked the is_valid() method.
     if contact_form.is_valid():
         print(contact_form.cleaned_data)
+        
     # if request.method == "POST":
     #     print(request.POST)
     #     print(request.POST.get("fullname"))
