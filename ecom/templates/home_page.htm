@@ -10,7 +10,9 @@
 <body>
     <h1>HI LARA THIS US YOUR WEBSITE..</h1>
     {{ title }}
-    <br> {{ content }}
+    <br> {{ content }} {% if request.user.is_authenticated %}
+    <h1>Premium</h1>
+    <br> {{premium_content}} {% endif %}
 </body>
 
 </html>
