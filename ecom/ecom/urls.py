@@ -22,12 +22,21 @@ from django.urls import path
 from .views import home_page,about_page,contact_page,login_page,registration_page
 # or from ecom.views import home_page
 
-from products.views import ProductListView,product_list_view,ProductDetailView,product_detail_view
+from products.views import (
+                    ProductListView,
+                    product_list_view,
+                    ProductDetailView,
+                    product_detail_view,
+                    ProductFeaturedView,
+                    ProductFeaturedDetailView
+                    )
 
 urlpatterns = [
     path('', home_page,name='index'),
     path('about/', about_page,name='index'),
     path('login/', login_page,name='index'),
+    path('featured/', ProductFeaturedView.as_view(),name='index'),
+    path('featured/<int:pk>', ProductFeaturedDetailView.as_view(),name='index'),
     path('products/', ProductListView.as_view(),name='index'),
     path('products_func/', product_list_view,name='index'),
     path('products/<int:pk>', ProductDetailView.as_view(),name='index'),
