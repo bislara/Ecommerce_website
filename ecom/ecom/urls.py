@@ -18,32 +18,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from .views import home_page,about_page,contact_page,login_page,registration_page
 # or from ecom.views import home_page
-
-# include all the classes at a time using the ()
-from products.views import (
-                    ProductListView,
-                    product_list_view,
-                    ProductDetailView,
-                    product_detail_view,
-                    ProductDetailSlugView,
-                    ProductFeaturedView,
-                    ProductFeaturedDetailView
-                    )
 
 urlpatterns = [
     path('', home_page,name='index'),
     path('about/', about_page,name='index'),
     path('login/', login_page,name='index'),
-    path('featured/', ProductFeaturedView.as_view(),name='index'),
-    path('featured/<int:pk>', ProductFeaturedDetailView.as_view(),name='index'),
-    path('products/', ProductListView.as_view(),name='index'),
-    path('products_func/', product_list_view,name='index'),
-    path('products/<int:pk>', ProductDetailView.as_view(),name='index'),
-    path('products/<slug:slug_field>', ProductDetailSlugView.as_view(),name='index'),
-    path('products_func/<int:pk>', product_detail_view,name='index'),
+    path('products/', include("products.urls")),
     path('register/', registration_page,name='index'),
     path('contact/', contact_page,name='index'),
     path('admin/', admin.site.urls),

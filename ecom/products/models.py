@@ -56,7 +56,7 @@ class ProductManager(models.Manager):
 # Create your models here.
 class Product(models.Model):
     title           = models.CharField(max_length=120)
-    # adding the slugfield to be found in URL
+# adding the slugfield to be found in URL..dont intialize unique = True, after u create a unique slug generator use that
     slug_field      = models.SlugField(null = True,blank = True,unique = True)
     description     = models.TextField()
     price           = models.DecimalField(decimal_places=2, max_digits=20, default=10.99)
@@ -64,6 +64,10 @@ class Product(models.Model):
     featured        = models.BooleanField(default = False)
 
     objects = ProductManager()
+
+    def get_absolute_url(self):
+        return "/products/{slug}".format(slug=self.slug_field)
+
 # python 3 
     def __str__(self):
         return self.title
