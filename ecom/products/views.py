@@ -28,10 +28,45 @@ class ProductListView(ListView):
     #     context = super(ProductListView, self).get_context_data(*args, **kwargs)
     #     print(context)
     #     return context
-    
+
     def get_queryset(self, *args, **kwargs):
         request = self.request
         return Product.objects.all()
+
+
+class ProductDetailSlugView(DetailView):
+    queryset = Product.objects.all()
+    template_name = "products/detail.htm"
+
+
+    def get_object(self, *args, **kwargs):
+        slug_field = self.kwargs.get('slug_field')
+        
+        try:
+            # get the row where slug_field = url slug
+            instance = Product.objects.get(slug_field = slug_field)
+        except Product.DoesNotExist:
+            # if no such products exits which is given in url
+            raise Http404("Product Not found..")
+        # if multiple slug has same name then return the 1st one
+        except Product.MultipleObjectsReturned:
+            qs = Product.objects.filter(slug_field=slug_field)
+            print("Inside multiple")
+            instance = qs.first()
+        except:
+            raise Http404("Uhhmmm ")
+        return instance
+
+    # self written get_object
+
+    # def get_object(self, *args, **kwargs):
+    #     slug_field = self.kwargs.get('slug_field')
+    #     instance = Product.objects.get_by_slug(slug_field)  # get_by_id is the custom function to get the value
+    #     if instance is None:
+    #         raise Http404("Product not found")
+    #     return instance
+
+    
 
 class ProductDetailView(DetailView):
     # queryset = Product.objects.all()

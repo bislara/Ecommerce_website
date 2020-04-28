@@ -28,6 +28,7 @@ from products.views import (
                     product_list_view,
                     ProductDetailView,
                     product_detail_view,
+                    ProductDetailSlugView,
                     ProductFeaturedView,
                     ProductFeaturedDetailView
                     )
@@ -41,6 +42,7 @@ urlpatterns = [
     path('products/', ProductListView.as_view(),name='index'),
     path('products_func/', product_list_view,name='index'),
     path('products/<int:pk>', ProductDetailView.as_view(),name='index'),
+    path('products/<slug:slug_field>', ProductDetailSlugView.as_view(),name='index'),
     path('products_func/<int:pk>', product_detail_view,name='index'),
     path('register/', registration_page,name='index'),
     path('contact/', contact_page,name='index'),

@@ -34,6 +34,15 @@ class ProductManager(models.Manager):
     def featured(self):
         return self.get_queryset().filter(featured = True)
 
+    # def all(self):
+    #     # return self.get_queryset().filter(slug_field = slug)
+    #     return self.get_queryset()
+    def get_by_slug(self, slug_field):
+        qs = self.get_queryset().filter(slug_field=slug_field) # Product.objects == self.get_queryset()
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
     def get_by_id(self, id):
         qs = self.get_queryset().filter(id=id) # Product.objects == self.get_queryset()
         if qs.count() == 1:
