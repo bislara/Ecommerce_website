@@ -22,6 +22,7 @@ from django.urls import path
 from .views import home_page,about_page,contact_page,login_page,registration_page
 # or from ecom.views import home_page
 
+# include all the classes at a time using the ()
 from products.views import (
                     ProductListView,
                     product_list_view,
@@ -46,6 +47,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
+# include the static and media contents in the url
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
