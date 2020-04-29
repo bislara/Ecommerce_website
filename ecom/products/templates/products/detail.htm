@@ -1,2 +1,15 @@
-{{ object.title}} {{ object.description}} {% if object.image %}
-<img src="{{ object.image.url }}" alt="no image"> {% endif %}
+{% extends "base.htm" %} {% block content %}
+<div class='container'>
+
+    <div class='row'>
+        <div class='col'>
+            <h1>{{ object.title }}</h1>
+            <h3>{{ "some sub title here"|title }}</h3>
+            <h5>Publish on {{ object.timestamp|date }}</h5>
+            {{ object.timestamp|timesince }} ago {{ object.description|linebreaks }}<br/> {% if object.image %}
+            <img src='{{ object.image.url }}' class='img-fluid' /> {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
