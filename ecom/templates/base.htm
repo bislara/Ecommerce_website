@@ -12,8 +12,7 @@
 </head>
 
 <body>
-
-    {% block content %}{% endblock %} {% include 'base/js.htm' %}
+    {% include 'base/navbar.htm' with brand_name='eCommerce Web' %} {% block content %}{% endblock %} {% include 'base/js.htm' %}
 
 </body>
 

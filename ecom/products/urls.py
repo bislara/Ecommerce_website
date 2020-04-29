@@ -13,11 +13,11 @@ from .views import (
                     )
 
 urlpatterns = [
-    path('featured/', ProductFeaturedView.as_view(),name='index'),
-    path('featured/<int:pk>', ProductFeaturedDetailView.as_view(),name='index'),
-    path('', ProductListView.as_view(),name='index'),
+    path('featured/', ProductFeaturedView.as_view(),name='featured'),
+    path('featured/<int:pk>', ProductFeaturedDetailView.as_view(),name='featured_filter'),
+    path('', ProductListView.as_view(),name='list'),
     path('products_func/', product_list_view,name='index'),
     path('<int:pk>', ProductDetailView.as_view(),name='index'),
-    path('<slug:slug_field>', ProductDetailSlugView.as_view(),name='index'),
+    path('<slug:slug_field>', ProductDetailSlugView.as_view(),name='detail'),
     path('products_func/<int:pk>', product_detail_view,name='index'),
 ]

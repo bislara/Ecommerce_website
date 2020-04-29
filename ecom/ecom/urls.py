@@ -23,12 +23,14 @@ from .views import home_page,about_page,contact_page,login_page,registration_pag
 # or from ecom.views import home_page
 
 urlpatterns = [
-    path('', home_page,name='index'),
-    path('about/', about_page,name='index'),
-    path('login/', login_page,name='index'),
-    path('products/', include("products.urls")),
-    path('register/', registration_page,name='index'),
-    path('contact/', contact_page,name='index'),
+    path('', home_page,name='home'),
+    path('about/', about_page,name='about'),
+    path('login/', login_page,name='login'),
+    # namespace is added so that if any other app is having same url it can work in direct way.
+    # include is having a tuple now as we are using namespace now. 2nd argument is the app name to be used
+    path('products/', include(("products.urls","products"), namespace = "products")),
+    path('register/', registration_page,name='register'),
+    path('contact/', contact_page,name='contact'),
     path('admin/', admin.site.urls),
 ]
 
