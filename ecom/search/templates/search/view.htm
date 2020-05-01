@@ -1,5 +1,24 @@
 {% extends "base.htm" %} {% block content %}
 <div class='container'>
+
+    <div class='row  mb-3'>
+        {% if query %}
+        <div class='col-12'>
+            Results for <b>{{ query }}</b>
+            <hr/>
+        </div>
+        {% else %}
+
+        <div class='col-12 col-md-6 mx-auto py-5'>
+            {% include 'snippets/search_form.htm' %}
+
+        </div>
+        <div class='col-12'>
+            <hr>
+        </div>
+        {% endif %}
+    </div>
+
     <div class='row'>
         {% if object_list %} {% for obj in object_list %}
         <div class='col'>
@@ -13,10 +32,9 @@
 
         {% else %}
     </div>
-    {% endif %} {% endfor %} {% else %}
-    <h2>No items found</h2>
+    {% endif %} {% endfor %}{% else %}
+    <h3>No item found in search for {{ request.GET.q }}</h3>
     {% endif %}
-
 </div>
 </div>
 {% endblock %}

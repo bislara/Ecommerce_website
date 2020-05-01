@@ -2,6 +2,7 @@ import random
 import os
 from django.db import models
 import uuid
+from django.db.models import Q
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
@@ -30,6 +31,14 @@ class ProductQuerySet(models.query.QuerySet):
     def featured(self):
         return self.filter(featured=True)
 
+    def search(self, query):
+        lookups = (Q(title__icontains=query) | 
+                  Q(description__icontains=query) |
+                  Q(price__icontains=query) |
+                  Q(tag__title__icontains=query)) 
+        # distinct so that it doesnot show duplicate
+        return self.filter(lookups).distinct()
+
 
 class ProductManager(models.Manager):
 
@@ -53,6 +62,9 @@ class ProductManager(models.Manager):
         if qs.count() == 1:
             return qs.first()
         return None
+    # more robost method of using this
+    def search(self, query):
+        return self.get_queryset().search(query)
 
 # Create your models here.
 class Product(models.Model):
