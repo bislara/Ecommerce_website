@@ -32,8 +32,10 @@
         </tbody>
     </table>
 
-    {% else %}
+    {% else %} {% if request.user.is_authenticated %}
     <p class='lead'>Cart is empty</p>
-    {% endif %}
+    {% else %}
+    <p class='lead'>Login To see your cart</p>
+    {% endif %} {% endif %}
 </div>
 {% endblock %}

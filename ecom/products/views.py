@@ -41,7 +41,9 @@ class ProductDetailSlugView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs)
-        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        cart_obj = None
+        if self.request.user.is_authenticated:
+            cart_obj, new_obj = Cart.objects.new_or_get(self.request)
         context['cart'] = cart_obj
         return context
 

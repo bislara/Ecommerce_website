@@ -9,7 +9,7 @@ User = settings.AUTH_USER_MODEL
 class CartManager(models.Manager):
     def new_or_get(self, request):
         cart_id = request.session.get("cart_id", None)
-        qs = self.get_queryset().filter(id=cart_id)
+        qs = self.get_queryset().filter(user=request.user)
         if qs.count() == 1:
             new_obj = False
             cart_obj = qs.first()

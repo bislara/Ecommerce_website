@@ -10,8 +10,12 @@ from products.models import Product
 #     return cart_obj
 
 def cart_home(request):
-    cart_obj, new_obj = Cart.objects.new_or_get(request)
-    return render(request,"carts/view.htm",{"cart": cart_obj})
+    if request.user.is_authenticated:
+        cart_obj, new_obj = Cart.objects.new_or_get(request)
+        request.session['cart_items'] = cart_obj.products.count()
+        return render(request,"carts/view.htm",{"cart": cart_obj})
+    else:
+        return render(request,"carts/view.htm",{"cart": None})
 
 def cart_update(request):
     product_id = request.POST.get('product_id')
@@ -21,12 +25,14 @@ def cart_update(request):
         except Product.DoesNotExist:
             print("Show message to user, product is gone?")
             return redirect("cart:home")
-        cart_obj, new_obj = Cart.objects.new_or_get(request)
-        if product_obj in cart_obj.products.all():
-            cart_obj.products.remove(product_obj)
+        if request.user.is_authenticated:
+            cart_obj, new_obj = Cart.objects.new_or_get(request)
+            if product_obj in cart_obj.products.all():
+                cart_obj.products.remove(product_obj)
+            else:
+                cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
+            request.session['cart_items'] = cart_obj.products.count()
         else:
-            cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
-        request.session['cart_items'] = cart_obj.products.count()
-        
+            return redirect("cart:home")
     # return redirect(product_obj.get_absolute_url())
     return redirect("cart:home")
