@@ -8,4 +8,4 @@
 <br> {{ content }} {% if request.user.is_authenticated %}
 <h1>Premium</h1>
 {{premium_content}} {% endif %}
-<br><br><img src="{% static 'img/car.jpg' %}" alt=""> {% endblock %}
+<br><br><img class="img-fluid img-responsive" src="{% static 'img/car.jpg' %}" alt=""> {% endblock %}

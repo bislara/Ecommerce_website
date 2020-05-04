@@ -2,13 +2,26 @@
 <div class='container'>
 
     <div class='row'>
-        <div class='col'>
+        <div class='col-12 col-md-6'>
+            <h1>{{ object.title }}</h1>
+            <h3>{{ "some sub title here"|title }}</h3>
+            <h5>Publish on {{ object.timestamp|date }}</h5>
+
+            {{ object.timestamp|timesince }} ago {{ object.description|linebreaks }}<br/> {% if object.image %}
+            <img src='{{ object.image.url }}' class='img-fluid' /> {% endif %}
+        </div>
+        <div class='col-12 col-md-6'>
+            {% include 'products/snippets/update_cart.htm' with product=object cart=cart %}
+
+
+        </div>
+        <!-- <div class='col'>
             <h1>{{ object.title }}</h1>
             <h3>{{ "some sub title here"|title }}</h3>
             <h5>Publish on {{ object.timestamp|date }}</h5>
             {{ object.timestamp|timesince }} ago {{ object.description|linebreaks }}<br/> {% if object.image %}
             <img src='{{ object.image.url }}' class='img-fluid' /> {% endif %}
-        </div>
+        </div> -->
     </div>
 </div>
 
