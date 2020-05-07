@@ -1,7 +1,0 @@
-{% extends "../base.htm" %} {% load static %} {% block title_head %}
-<title> Login page</title>
-{% endblock title_head %} {% block content %}
-<form method='POST'> {% csrf_token %} {{ form }}
-    <button type='submit' class='btn btn-default'>Submit</button>
-</form>
-{% endblock %}
