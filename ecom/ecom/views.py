@@ -7,8 +7,8 @@ from ecom.forms import ContactForm
 def home_page(request):
     # return HttpResponse ("HI WORLD !!")
     context = {
-        "title":"HELLO WORLD",
-        "content":"Welcome to the Home page",
+        "title":"This website has a collection of lots of garments",
+        "content":"Go to the products page to know more",
     }
     if request.user.is_authenticated:
         context["premium_content"] = "Hey I am a student"

@@ -1,4 +1,6 @@
-{% extends "base.htm" %} {% block content %}
+{% extends "base.htm" %} {% block content %} {% block title_head %}
+<title> Products page</title>
+{% endblock title_head %}
 <div class='container'>
     <div class='row'>
         {% if object_list %} {% for obj in object_list %}

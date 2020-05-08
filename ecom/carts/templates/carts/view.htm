@@ -1,5 +1,6 @@
-{% extends 'base.htm' %} {% block content %}
-
+{% extends 'base.htm' %} {% block content %} {% block title_head %}
+<title> Cart page</title>
+{% endblock title_head %}
 <div class="container">
     <h1>CARTS</h1>
     {% if cart.products.exists %}
