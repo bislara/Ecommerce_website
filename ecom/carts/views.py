@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from billing.models import BillingProfile
 from .models import Cart
 from products.models import Product
 from orders.models import Order
@@ -43,8 +43,15 @@ def checkout_home(request):
         order_obj = None
         if cart_created or cart_obj.products.count() == 0:
             return redirect("cart:home")
-        else:
-            order_obj, new_order_obj = Order.objects.get_or_create(cart=cart_obj)
+        # else:
+        #     order_obj, new_order_obj = Order.objects.get_or_create(cart=cart_obj)
+        user = request.user
+        billing_profile, billing_profile_created = BillingProfile.objects.get_or_create(
+                                                            user=user, email=user.email)
+        
+        if billing_profile is not None:
+            order_obj, order_obj_created = Order.objects.new_or_get(billing_profile, cart_obj)
+            
     else:
         return redirect("cart:home")
 

@@ -1,6 +1,7 @@
 {% extends "base.htm" %} {% block content %} {% block title_head %}
 <title> Checkout page</title>
-{% endblock title_head %}
+{% endblock title_head %} {{ object.order_id }} -- {{ object.cart }}
+
 <div class="container">
     <h1>Checkout</h1>
 
