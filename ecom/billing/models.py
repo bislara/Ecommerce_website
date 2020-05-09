@@ -7,6 +7,21 @@ User = settings.AUTH_USER_MODEL
 # abc@teamcfe.com -->> 1000000 billing profiles
 # user abc@teamcfe.com -- 1 billing profile
 
+class BillingProfileManager(models.Manager):
+    def new_or_get(self, request):
+        user = request.user
+        print(user)
+        created = False
+        obj = None
+        if user.is_authenticated:
+            obj, created = self.model.objects.get_or_create(
+                            user=user, email=user.email)
+        else:
+            pass
+        return obj, created
+
+
+
 class BillingProfile(models.Model):
     user        = models.OneToOneField(User, null=True, blank=True,on_delete=models.DO_NOTHING)
     email       = models.EmailField()
@@ -17,6 +32,8 @@ class BillingProfile(models.Model):
 
     def __str__(self):
         return self.email
+    
+    objects = BillingProfileManager()
 
 # def billing_profile_created_receiver(sender, instance, created, *args, **kwargs):
 #     if created:
