@@ -67,6 +67,10 @@ def cart_update(request):
                 }
                 return JsonResponse(json_data, status=200) # HttpResponse
                 # return JsonResponse({"message": "Error 400"}, status=400) # Django Rest Framework    # return redirect(product_obj.get_absolute_url())
+        else:
+            if request.is_ajax(): # Asynchronous JavaScript And XML / JSON
+                print("Ajax No auth")
+                return JsonResponse({"message": "Please login first!"}, status=400) # Django Rest Framework    # return redirect(product_obj.get_absolute_url())
     return redirect("cart:home")
 
 def checkout_home(request):

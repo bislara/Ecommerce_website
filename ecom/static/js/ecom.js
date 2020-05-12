@@ -136,13 +136,20 @@ $(document).ready(function() {
                 }
             },
             error: function(errorData) {
+                var jsonData = errorData.responseJSON
+                var msg = ""
+
+                $.each(jsonData, function(key, value) { // key, value  array index / object
+                    msg += key + ": " + value + "<br/>"
+                })
+
                 $.alert({
                     title: "Oops!",
-                    content: "An error occurred",
+                    content: msg,
                     theme: "modern",
                 })
                 console.log("error")
-                console.log(errorData)
+                console.log(msg)
             }
         })
     })
