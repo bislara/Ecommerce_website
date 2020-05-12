@@ -25,7 +25,7 @@ def about_page(request):
 def contact_page(request):
     contact_form = ContactForm(request.POST or None)
     context = {
-        "title":"HELLO WORLD",
+        "title":"Hello User",
         "content":"Welcome to the contact page",
         "form": contact_form
     }
@@ -33,6 +33,13 @@ def contact_page(request):
     # Django creates an attribute called cleaned_data , a dictionary which contains cleaned data only from the fields which have passed the validation tests. Note that cleaned_data attribute will only be available to you after you have invoked the is_valid() method.
     if contact_form.is_valid():
         print(contact_form.cleaned_data)
+        if request.is_ajax():
+            return JsonResponse({"message": "Thank you for your submission"})
+
+    if contact_form.errors:
+        errors = contact_form.errors.as_json()
+        if request.is_ajax():
+            return HttpResponse(errors, status=400, content_type='application/json')
         
     # if request.method == "POST":
     #     print(request.POST)

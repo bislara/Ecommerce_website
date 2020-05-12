@@ -43,3 +43,6 @@ class ContactForm(forms.Form):
             raise forms.ValidationError("Email must have @ and .com")
         return email
 
+    # def clean_content(self):
+    #     raise forms.ValidationError("Content is wrong.")
+
